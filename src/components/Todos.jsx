@@ -129,6 +129,9 @@ const Todos = () => {
           }
         });
     }
+    fetch(`https://dummyjson.com/todos`)
+      .then((res) => res.json())
+      .then((data) => setTodoItems(data));
     setIsModalVisible(false);
     setSelectedTodo(null);
   };
