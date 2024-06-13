@@ -1,8 +1,9 @@
-import { Button, Modal, Space, Table } from "antd";
+import { Button, Modal, Space, Table, message } from "antd";
 import React, { useEffect, useState } from "react";
 import NewTodo from "./NewTodo";
 import Title from "antd/es/skeleton/Title";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+// import "./styles.css";
 
 const Todos = () => {
   const [todoItems, setTodoItems] = useState({});
@@ -82,7 +83,15 @@ const Todos = () => {
       method: 'DELETE',
     })
     .then(res => res.json())
-    .then(console.log);
+    .then((data)=>{
+        if (data.isDeleted) {
+          message.success("Deleted successfully");
+          setTodoItems((prev) => ({
+            ...prev,
+            todos: prev.todos.filter((item) => item.id !== deleteRecord.id),
+          }));
+      }
+    });
 
     setIsDeleteModalVisible(false)
     setDeleteRecord(null)
@@ -98,7 +107,11 @@ const Todos = () => {
         }),
       })
         .then((res) => res.json())
-        .then(console.log);
+        .then((data)=>{
+          if(data?.id){
+            message.success("Updated successfully");
+          }
+        });
     } else {
       fetch("https://dummyjson.com/todos/add", {
         method: "POST",
@@ -106,11 +119,15 @@ const Todos = () => {
         body: JSON.stringify({
           todo: "Use DummyJSON in the project",
           completed: data?.completed,
-          userId: 5,
+          userId: 10,
         }),
       })
         .then((res) => res.json())
-        .then(console.log);
+        .then((data)=>{
+          if(data?.id){
+            message.success("Created successfully");
+          }
+        });
     }
     setIsModalVisible(false);
     setSelectedTodo(null);
