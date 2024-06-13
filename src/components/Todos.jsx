@@ -188,7 +188,7 @@ const Todos = () => {
           dataSource={todoItems?.todos}
           pagination={{
             total: todoItems?.total,
-            defaultPageSize: 50,
+            defaultPageSize: todoItems?.limit,
             onChange: (pageNo, pageSize) => {
               paginationChanges(pageNo, pageSize);
             },
