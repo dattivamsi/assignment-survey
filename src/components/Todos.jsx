@@ -12,7 +12,7 @@ const Todos = () => {
   const [deleteRecord,setDeleteRecord] = useState(null)
   const [selectedTodo, setSelectedTodo] = useState(null);
   useEffect(() => {
-    fetch(`https://dummyjson.com/todos?limit=${50}&skip=${0}`)
+    fetch(`https://dummyjson.com/todos`)
       .then((res) => res.json())
       .then((data) => setTodoItems(data));
   }, []); 
